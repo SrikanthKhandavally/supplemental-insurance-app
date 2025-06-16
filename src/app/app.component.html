@@ -1,12 +1,25 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button (click)="sidenav.toggle()">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span class="toolbar-title">Supplemental Insurance Portal</span>
+<mat-toolbar color="primary" class="modern-toolbar">
+  <div class="toolbar-left">
+    <button mat-icon-button (click)="sidenav.toggle()" class="menu-button">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="toolbar-title">Supplemental Insurance Portal</span>
+  </div>
+  <div class="toolbar-right">
+    <button mat-icon-button>
+      <mat-icon>notifications</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
 
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #sidenav mode="side" opened class="sidenav">
+    <div class="sidenav-header">
+      <img src="assets/logo.png" alt="Logo" class="logo" onerror="this.style.display='none'">
+    </div>
     <mat-nav-list>
       <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
         <mat-icon>dashboard</mat-icon>

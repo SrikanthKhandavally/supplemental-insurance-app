@@ -1,50 +1,166 @@
-.sidenav-container {
-  height: 100vh;
-  display: flex;
-}
-
-.sidenav {
-  width: 220px;
-  background: #f4f4f4;
-  border-right: 1px solid #ddd;
-}
-
-.nav-label {
-  margin-left: 12px;
-}
-
-.active-link {
-  background-color: rgba(63, 81, 181, 0.1);
-  font-weight: bold;
-}
-
-mat-toolbar {
-  position: sticky;
+/* Modern Toolbar Styles */
+.modern-toolbar {
+  position: fixed;
   top: 0;
-  z-index: 2;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  height: 64px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.toolbar-left, .toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .toolbar-title {
-  margin-left: 10px;
+  margin-left: 16px;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+}
+
+.menu-button {
+  transition: background-color 0.3s ease;
+}
+
+.menu-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Sidenav Styles */
+.sidenav-container {
+  height: 100vh;
+  display: flex;
+  margin-top: 64px; /* Account for fixed toolbar */
+}
+
+.sidenav {
+  width: 260px;
+  background: white;
+  border-right: none;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+}
+
+.sidenav-header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+
+.logo {
+  max-width: 120px;
+  height: auto;
+}
+
+mat-nav-list {
+  padding-top: 8px;
 }
 
 mat-nav-list a {
   display: flex;
   align-items: center;
-  padding: 10px 16px;
-  font-size: 15px;
-  color: #333;
+  padding: 12px 24px;
+  font-size: 14px;
+  color: rgba(0,0,0,0.87);
   text-decoration: none;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  margin: 4px 8px;
+  width: calc(100% - 16px);
+  position: relative;
+  overflow: hidden;
+}
+
+mat-nav-list a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.04);
+  transform: translateX(-100%) skewX(-15deg);
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+mat-nav-list a:hover::before {
+  transform: translateX(0) skewX(-15deg);
+}
+
+mat-nav-list a mat-icon {
+  margin-right: 16px;
+  color: rgba(0,0,0,0.54);
+  transition: all 0.3s ease;
 }
 
 mat-nav-list a:hover {
-  background-color: #e0e0e0;
-  cursor: pointer;
+  color: #3f51b5;
+  transform: translateX(4px);
 }
 
+mat-nav-list a:hover mat-icon {
+  color: #3f51b5;
+  transform: scale(1.1);
+}
+
+.active-link {
+  background-color: rgba(63, 81, 181, 0.1) !important;
+  color: #3f51b5 !important;
+  font-weight: 500;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(63, 81, 181, 0.1);
+}
+
+.active-link::before {
+  background-color: rgba(63, 81, 181, 0.1) !important;
+  transform: translateX(0) skewX(-15deg) !important;
+}
+
+.active-link mat-icon {
+  color: #3f51b5 !important;
+  transform: scale(1.1);
+}
+
+.nav-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Main Content Styles */
 .main-content {
-  padding: 20px;
+  padding: 24px;
   background-color: #fafafa;
+  min-height: calc(100vh - 64px);
+}
+
+/* Button Styles */
+button[mat-icon-button] {
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+button[mat-icon-button]:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  .sidenav {
+    width: 240px;
+  }
+  
+  .toolbar-title {
+    font-size: 1.1rem;
+  }
 }

@@ -1,0 +1,167 @@
+/* --- Unified Dialog and Form Backgrounds --- */
+::ng-deep .mat-dialog-container,
+.policy-form-container.modern-dialog,
+::ng-deep .mat-dialog-content,
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background: #fff !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Remove fill background from form fields */
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background: #fff !important;
+}
+
+/* Remove any card-like effect from mat-dialog-content */
+::ng-deep .mat-dialog-content {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Remove any border or shadow from mat-form-field */
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-outline {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove any extra margin/padding from the dialog container */
+::ng-deep .mat-dialog-container {
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 18px !important;
+  background: #fff !important;
+  box-shadow: 0 8px 32px rgba(60, 64, 67, 0.18) !important;
+}
+
+.policy-form-container.modern-dialog {
+  padding: 32px 32px 24px 32px;
+  min-width: 700px;
+  max-width: 1000px;
+  border-radius: 18px;
+  background: #fff !important;
+  box-shadow: 0 8px 32px rgba(60, 64, 67, 0.18);
+}
+
+.modern-title {
+  margin: 0 0 32px 0;
+  color: #1a202c;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+mat-dialog-content {
+  padding: 0;
+  margin-bottom: 32px;
+}
+
+.form-row {
+  margin-bottom: 28px;
+}
+
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.modern-field.mat-form-field {
+  font-size: 1.1rem;
+  border-radius: 10px;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background: #fff !important;
+  border-radius: 10px 10px 0 0;
+  font-size: 1.1rem;
+  box-shadow: none;
+  border: none;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-outline {
+  border-radius: 10px;
+  border: none;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+  font-size: 1.1rem;
+}
+
+mat-dialog-actions {
+  padding: 0;
+  margin: 0;
+}
+
+.modern-btn {
+  min-width: 120px;
+  border-radius: 24px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-left: 12px;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+
+.modern-btn[mat-flat-button]:not([disabled]):hover {
+  background: #3949ab;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(60, 64, 67, 0.12);
+}
+
+.modern-btn[mat-stroked-button]:not([disabled]):hover {
+  border-color: #3949ab;
+  color: #3949ab;
+  background: #f5f7fa;
+}
+
+.mat-form-field.mat-focused .mat-form-field-flex {
+  background: #e3eafc;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-suffix {
+  color: #757575;
+  font-size: 1.1rem;
+  margin-left: 0;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-label {
+  color: #757575;
+  font-weight: 500;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-label.mat-focused {
+  color: #3949ab;
+}
+
+.mat-error {
+  font-size: 0.95rem;
+  color: #d93025;
+}
+
+@media (max-width: 768px) {
+  .policy-form-container.modern-dialog {
+    min-width: 100%;
+    padding: 16px;
+    max-width: 100vw;
+  }
+  .two-columns {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .modern-title {
+    font-size: 1.3rem;
+  }
+} 

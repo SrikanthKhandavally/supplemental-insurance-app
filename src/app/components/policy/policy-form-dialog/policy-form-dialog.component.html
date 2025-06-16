@@ -1,0 +1,70 @@
+<div class="policy-form-container modern-dialog">
+  <h2 mat-dialog-title class="modern-title">{{dialogTitle}}</h2>
+  
+  <form [formGroup]="policyForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="full-width modern-field">
+          <mat-label>Policy Type</mat-label>
+          <mat-select formControlName="policyType">
+            <mat-option *ngFor="let type of policyTypes" [value]="type">
+              {{type}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="policyForm.get('policyType')?.hasError('required')">
+            Policy type is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="full-width modern-field">
+          <mat-label>Coverage Description</mat-label>
+          <textarea matInput formControlName="coverageDescription" rows="4"
+                    placeholder="Enter detailed coverage description..."></textarea>
+          <mat-error>{{getErrorMessage('coverageDescription')}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row two-columns">
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Coverage Amount</mat-label>
+          <input matInput type="number" formControlName="coverageAmount"
+                 placeholder="Enter coverage amount">
+          <span matSuffix>$</span>
+          <mat-error>{{getErrorMessage('coverageAmount')}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Premium Amount</mat-label>
+          <input matInput type="number" formControlName="premiumAmount"
+                 placeholder="Enter premium amount">
+          <span matSuffix>$</span>
+          <mat-error>{{getErrorMessage('premiumAmount')}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="full-width modern-field">
+          <mat-label>Payment Frequency</mat-label>
+          <mat-select formControlName="paymentFrequency">
+            <mat-option *ngFor="let frequency of paymentFrequencies" [value]="frequency">
+              {{frequency}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="policyForm.get('paymentFrequency')?.hasError('required')">
+            Payment frequency is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-stroked-button color="primary" type="button" (click)="onCancel()" class="modern-btn">Cancel</button>
+      <button mat-flat-button color="primary" type="submit" 
+              [disabled]="!policyForm.valid" class="modern-btn">
+        {{isEditMode ? 'Update' : 'Create'}} Policy
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div> 
