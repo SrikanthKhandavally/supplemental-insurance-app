@@ -1,1 +1,50 @@
-/* You can add global styles to this file, and also import other style files */
+.sidenav-container {
+  height: 100vh;
+  display: flex;
+}
+
+.sidenav {
+  width: 220px;
+  background: #f4f4f4;
+  border-right: 1px solid #ddd;
+}
+
+.nav-label {
+  margin-left: 12px;
+}
+
+.active-link {
+  background-color: rgba(63, 81, 181, 0.1);
+  font-weight: bold;
+}
+
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.toolbar-title {
+  margin-left: 10px;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+mat-nav-list a {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  font-size: 15px;
+  color: #333;
+  text-decoration: none;
+}
+
+mat-nav-list a:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+.main-content {
+  padding: 20px;
+  background-color: #fafafa;
+}
