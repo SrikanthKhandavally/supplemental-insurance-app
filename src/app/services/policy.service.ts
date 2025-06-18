@@ -18,7 +18,7 @@ export interface Policy {
   providedIn: 'root'
 })
 export class PolicyService {
-  private apiUrl = 'api/policies'; // Replace with your actual API endpoint
+  private apiUrl = 'http://localhost:5001/api/policy/direct';
 
   // Mock data for development
   private mockPolicies: Policy[] = [
@@ -87,21 +87,10 @@ export class PolicyService {
   /**
    * Sends a POST request to the API to create a new policy.
    * - Accepts a policy object without policyId, createdAt, or updatedAt.
-   * - Returns the created policy as an Observable from the backend.
+   * - Returns the full API response (with data/message/policy_id) as an Observable.
    */
-  createPolicy(policy: Omit<Policy, 'policyId' | 'createdAt' | 'updatedAt'>): Observable<Policy> {
-    // Mock implementation for development
-    const newPolicy: Policy = {
-      ...policy,
-      policyId: this.mockPolicies.length + 1,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    };
-    this.mockPolicies.push(newPolicy);
-    return of(newPolicy);
-
-    // When API is ready, just use this line instead:
-    // return this.http.post<Policy>(this.apiUrl, policy);
+  createPolicy(policy: Omit<Policy, 'policyId' | 'createdAt' | 'updatedAt'>): Observable<any> {
+    return this.http.post<any>(this.apiUrl, policy);
   }
 
   updatePolicy(id: number, policy: Partial<Policy>): Observable<Policy | undefined> {
@@ -161,5 +150,12 @@ export class PolicyService {
     return of(this.mockPolicies.filter(p => p.policyStatus === 'Expired'));
     // TODO: Uncomment when API is ready
     // return this.http.get<Policy[]>(`${this.apiUrl}/expired`);
+  }
+
+  /**
+   * Adds a policy to the mockPolicies array (for UI sync when using API).
+   */
+  public addToMockPolicies(policy: Policy): void {
+    this.mockPolicies.push(policy);
   }
 }
