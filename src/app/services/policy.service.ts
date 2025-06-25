@@ -19,7 +19,7 @@ export interface Policy {
   providedIn: 'root'
 })
 export class PolicyService {
-  private apiUrl = 'http://localhost:5001/api/policy/direct';
+  private apiUrl = 'http://127.0.0.1:5000/policy/add';
 
   // Mock data for development
   private mockPolicies: Policy[] = [
