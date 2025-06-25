@@ -1,0 +1,65 @@
+<div class="policy-details-dialog">
+  <div class="details-header">
+    <h2>Policy Details</h2>
+    <button mat-icon-button mat-dialog-close class="close-btn"><mat-icon>close</mat-icon></button>
+  </div>
+  <mat-divider class="details-divider"></mat-divider>
+  <div class="details-content">
+    <div class="details-col">
+      <!-- General Info Section -->
+      <div class="details-section">
+        <div class="details-row">
+          <div class="details-label">Policy ID:</div>
+          <div class="details-value">{{data.policy.policyId}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">Type:</div>
+          <div class="details-value">{{data.policy.policyType}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">Status:</div>
+          <div class="details-value status-value" [ngClass]="{'active': data.policy.policyStatus === 'Active', 'inactive': data.policy.policyStatus !== 'Active'}">{{data.policy.policyStatus}}</div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- Coverage Section -->
+      <div class="details-section">
+        <div class="section-title">Coverage</div>
+        <div class="details-row">
+          <div class="details-label">Description:</div>
+          <div class="details-value">{{data.policy.coverageDescription}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">Amount:</div>
+          <div class="details-value">{{data.policy.coverageAmount | currency}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="details-col">
+      <!-- Financial Section -->
+      <div class="details-section">
+        <div class="section-title">Financial</div>
+        <div class="details-row">
+          <div class="details-label">Premium:</div>
+          <div class="details-value">{{data.policy.premiumAmount | currency}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">Payment Frequency:</div>
+          <div class="details-value">{{data.policy.paymentFrequency}}</div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- Dates Section -->
+      <div class="details-section">
+        <div class="details-row">
+          <div class="details-label">Created:</div>
+          <div class="details-value">{{data.policy.createdAt | date:'medium'}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">Last Updated:</div>
+          <div class="details-value">{{data.policy.updatedAt | date:'medium'}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

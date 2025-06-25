@@ -9,9 +9,12 @@ import { AppComponent } from './app.component';
 import { PolicyComponent } from './components/policy/policy.component';
 import { PolicyFormDialogComponent } from './components/policy/policy-form-dialog/policy-form-dialog.component';
 import { ClientComponent } from './components/client/client.component';
+import { ClientFormDialogComponent } from './components/client/client-form-dialog/client-form-dialog.component';
+import { ClientDetailsDialogComponent } from './components/client/client-details-dialog/client-details-dialog.component';
 import { EnrollmentComponent } from './components/enrollment/enrollment.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MaterialModule } from './material/material.module';
+import { PolicyDetailsDialogComponent } from './components/policy/policy-details-dialog.component';
 
 @NgModule({
   declarations: [
@@ -19,8 +22,11 @@ import { MaterialModule } from './material/material.module';
     PolicyComponent,
     PolicyFormDialogComponent,
     ClientComponent,
+    ClientFormDialogComponent,
+    ClientDetailsDialogComponent,
     EnrollmentComponent,
     DashboardComponent,
+    PolicyDetailsDialogComponent,
   ],
   imports: [
     BrowserModule,

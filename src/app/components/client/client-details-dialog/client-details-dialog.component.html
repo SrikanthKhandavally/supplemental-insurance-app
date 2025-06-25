@@ -1,0 +1,98 @@
+<div class="client-details-dialog">
+  <div class="details-header">
+    <h2>Client Details</h2>
+    <button mat-icon-button mat-dialog-close class="close-btn"><mat-icon>close</mat-icon></button>
+  </div>
+  <mat-divider class="details-divider"></mat-divider>
+  <div class="details-content">
+    <div class="details-col">
+      <!-- Status Section -->
+      <div class="details-section">
+        <div class="details-row">
+          <div class="details-label">Client ID:</div>
+          <div class="details-value">{{data.client.client_id}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">Status:</div>
+          <div class="details-value status-value" [ngClass]="{'active': data.client.status === 'ACTIVE', 'inactive': data.client.status !== 'ACTIVE'}">{{data.client.status}}</div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- Personal Info Section -->
+      <div class="details-section">
+        <div class="section-title">Personal Information</div>
+        <div class="details-row">
+          <div class="details-label">Name:</div>
+          <div class="details-value">{{data.client.first_name}} {{data.client.last_name}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">Gender:</div>
+          <div class="details-value">{{data.client.gender}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">Date of Birth:</div>
+          <div class="details-value">{{data.client.date_of_birth | date}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">Marital Status:</div>
+          <div class="details-value">{{data.client.marital_status}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">Occupation:</div>
+          <div class="details-value">{{data.client.occupation}}</div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- Contact Section -->
+      <div class="details-section">
+        <div class="section-title">Contact</div>
+        <div class="details-row">
+          <div class="details-label">Email:</div>
+          <div class="details-value">{{data.client.email_address}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">Phone:</div>
+          <div class="details-value">{{data.client.contact_phone}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="details-col">
+      <!-- Address Section -->
+      <div class="details-section">
+        <div class="section-title">Address</div>
+        <div class="details-row">
+          <div class="details-label">Address:</div>
+          <div class="details-value">{{data.client.address}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">City:</div>
+          <div class="details-value">{{data.client.city}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">State:</div>
+          <div class="details-value">{{data.client.state}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">Postal Code:</div>
+          <div class="details-value">{{data.client.postal_code}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">Country:</div>
+          <div class="details-value">{{data.client.country}}</div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- Dates Section -->
+      <div class="details-section">
+        <div class="details-row">
+          <div class="details-label">Created:</div>
+          <div class="details-value">{{data.client.created_date | date:'medium'}}</div>
+        </div>
+        <div class="details-row">
+          <div class="details-label">Last Updated:</div>
+          <div class="details-value">{{data.client.last_updated_date | date:'medium'}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

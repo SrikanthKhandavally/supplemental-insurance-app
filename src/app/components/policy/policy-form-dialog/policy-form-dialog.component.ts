@@ -32,18 +32,59 @@ export class PolicyFormDialogComponent implements OnInit {
     'Annual'
   ];
 
+  policyTypeCodes = [
+    'ACC_INS', 'CRIT_ILL', 'HOSP_IND', 'LTC', 'DENTAL', 'VISION', 'DISABILITY', 'LIFE'
+  ];
+  policyTypeNames = [
+    'Accident Insurance', 'Critical Illness', 'Hospital Indemnity', 'Long-Term Care',
+    'Dental Insurance', 'Vision Insurance', 'Disability Insurance', 'Life Insurance'
+  ];
+  policyCategories = [
+    'Supplemental', 'Core', 'Optional', 'Group', 'Individual'
+  ];
+  coverageCategories = [
+    'Personal Accident', 'Health', 'Hospital', 'Dental', 'Vision', 'Disability', 'Life'
+  ];
+  coverageTypes = [
+    'Fixed Benefit', 'Indemnity', 'Reimbursement', 'Cashless'
+  ];
+  benefitTypes = [
+    'Lump Sum', 'Reimbursement', 'Installment', 'Direct Payment'
+  ];
+  premiumFrequencies = [
+    'Monthly', 'Quarterly', 'Semi-Annual', 'Annual'
+  ];
+  riderOptions = [
+    'Fracture Rider', 'Emergency Room Rider', 'Critical Illness Rider', 'Maternity Rider', 'Wellness Rider'
+  ];
+
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<PolicyFormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { policy?: Policy }
   ) {
     this.policyForm = this.fb.group({
-      policyType: ['', [Validators.required]],
-      coverageDescription: ['', [Validators.required, Validators.minLength(10)]],
-      coverageAmount: ['', [Validators.required, Validators.min(10000), Validators.max(1000000)]],
-      premiumAmount: ['', [Validators.required, Validators.min(100)]],
-      paymentFrequency: ['', [Validators.required]],
-      policyStatus: ['Active']
+      policy_id: [''],
+      policy_type_code: ['', Validators.required],
+      policy_type_name: ['', Validators.required],
+      policy_category: ['', Validators.required],
+      policy_type_description: ['', Validators.required],
+      is_active: ['Y', Validators.required],
+      coverage_category: ['', Validators.required],
+      coverage_type: ['', Validators.required],
+      coverage_limit: [null, [Validators.required, Validators.min(0)]],
+      base_coverage_amount: [null, [Validators.required, Validators.min(0)]],
+      annual_premium: [null, [Validators.required, Validators.min(0)]],
+      premium_frequency: ['', Validators.required],
+      benefit_type: ['', Validators.required],
+      waiting_period_days: [0, [Validators.required, Validators.min(0)]],
+      coverage_duration_months: [null, [Validators.required, Validators.min(0)]],
+      pre_existing_exclusion: ['N', Validators.required],
+      riders_available: [''],
+      eligibility_notes: [''],
+      renewable: ['Y', Validators.required],
+      taxable_benefit: ['N', Validators.required],
+      description: ['', Validators.required]
     });
   }
 
@@ -57,13 +98,7 @@ export class PolicyFormDialogComponent implements OnInit {
 
   onSubmit(): void {
     if (this.policyForm.valid) {
-      const formValue = this.policyForm.value;
-      
-      // Format currency values
-      formValue.coverageAmount = Number(formValue.coverageAmount);
-      formValue.premiumAmount = Number(formValue.premiumAmount);
-
-      this.dialogRef.close(formValue);
+      this.dialogRef.close(this.policyForm.value);
     }
   }
 

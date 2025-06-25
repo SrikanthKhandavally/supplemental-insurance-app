@@ -3,58 +3,136 @@
   
   <form [formGroup]="policyForm" (ngSubmit)="onSubmit()">
     <mat-dialog-content>
+      <!-- General Info -->
       <div class="form-row">
-        <mat-form-field appearance="fill" class="full-width modern-field">
-          <mat-label>Policy Type</mat-label>
-          <mat-select formControlName="policyType">
-            <mat-option *ngFor="let type of policyTypes" [value]="type">
-              {{type}}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="policyForm.get('policyType')?.hasError('required')">
-            Policy type is required
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="form-row">
-        <mat-form-field appearance="fill" class="full-width modern-field">
-          <mat-label>Coverage Description</mat-label>
-          <textarea matInput formControlName="coverageDescription" rows="4"
-                    placeholder="Enter detailed coverage description..."></textarea>
-          <mat-error>{{getErrorMessage('coverageDescription')}}</mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="form-row two-columns">
         <mat-form-field appearance="fill" class="modern-field">
-          <mat-label>Coverage Amount</mat-label>
-          <input matInput type="number" formControlName="coverageAmount"
-                 placeholder="Enter coverage amount">
-          <span matSuffix>$</span>
-          <mat-error>{{getErrorMessage('coverageAmount')}}</mat-error>
+          <mat-label>Policy Type Code</mat-label>
+          <mat-select formControlName="policy_type_code" required>
+            <mat-option *ngFor="let code of policyTypeCodes" [value]="code">{{code}}</mat-option>
+          </mat-select>
         </mat-form-field>
-
         <mat-form-field appearance="fill" class="modern-field">
-          <mat-label>Premium Amount</mat-label>
-          <input matInput type="number" formControlName="premiumAmount"
-                 placeholder="Enter premium amount">
-          <span matSuffix>$</span>
-          <mat-error>{{getErrorMessage('premiumAmount')}}</mat-error>
+          <mat-label>Policy Type Name</mat-label>
+          <mat-select formControlName="policy_type_name" required>
+            <mat-option *ngFor="let name of policyTypeNames" [value]="name">{{name}}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
-
       <div class="form-row">
-        <mat-form-field appearance="fill" class="full-width modern-field">
-          <mat-label>Payment Frequency</mat-label>
-          <mat-select formControlName="paymentFrequency">
-            <mat-option *ngFor="let frequency of paymentFrequencies" [value]="frequency">
-              {{frequency}}
-            </mat-option>
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Policy Category</mat-label>
+          <mat-select formControlName="policy_category" required>
+            <mat-option *ngFor="let cat of policyCategories" [value]="cat">{{cat}}</mat-option>
           </mat-select>
-          <mat-error *ngIf="policyForm.get('paymentFrequency')?.hasError('required')">
-            Payment frequency is required
-          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Policy Type Description</mat-label>
+          <textarea matInput formControlName="policy_type_description" rows="2" required></textarea>
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Is Active</mat-label>
+          <mat-select formControlName="is_active" required>
+            <mat-option value="Y">Yes</mat-option>
+            <mat-option value="N">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Renewable</mat-label>
+          <mat-select formControlName="renewable" required>
+            <mat-option value="Y">Yes</mat-option>
+            <mat-option value="N">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- Coverage Info -->
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Coverage Category</mat-label>
+          <mat-select formControlName="coverage_category" required>
+            <mat-option *ngFor="let cat of coverageCategories" [value]="cat">{{cat}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Coverage Type</mat-label>
+          <mat-select formControlName="coverage_type" required>
+            <mat-option *ngFor="let type of coverageTypes" [value]="type">{{type}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Coverage Limit</mat-label>
+          <input matInput type="number" formControlName="coverage_limit" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Base Coverage Amount</mat-label>
+          <input matInput type="number" formControlName="base_coverage_amount" required>
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Benefit Type</mat-label>
+          <mat-select formControlName="benefit_type" required>
+            <mat-option *ngFor="let type of benefitTypes" [value]="type">{{type}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Waiting Period (days)</mat-label>
+          <input matInput type="number" formControlName="waiting_period_days" required>
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Coverage Duration (months)</mat-label>
+          <input matInput type="number" formControlName="coverage_duration_months" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Pre-existing Exclusion</mat-label>
+          <mat-select formControlName="pre_existing_exclusion" required>
+            <mat-option value="Y">Yes</mat-option>
+            <mat-option value="N">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- Financial Info -->
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Annual Premium</mat-label>
+          <input matInput type="number" formControlName="annual_premium" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Premium Frequency</mat-label>
+          <mat-select formControlName="premium_frequency" required>
+            <mat-option *ngFor="let freq of premiumFrequencies" [value]="freq">{{freq}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Taxable Benefit</mat-label>
+          <mat-select formControlName="taxable_benefit" required>
+            <mat-option value="Y">Yes</mat-option>
+            <mat-option value="N">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Riders Available</mat-label>
+          <mat-select formControlName="riders_available" multiple>
+            <mat-option *ngFor="let rider of riderOptions" [value]="rider">{{rider}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- Eligibility & Description -->
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Eligibility Notes</mat-label>
+          <textarea matInput formControlName="eligibility_notes" rows="2"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="modern-field">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description" rows="2" required></textarea>
         </mat-form-field>
       </div>
     </mat-dialog-content>

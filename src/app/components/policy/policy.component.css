@@ -47,6 +47,18 @@
   justify-content: center;
 }
 
+.active-chip {
+  background-color: #e8f5e9 !important;
+  color: #388e3c !important;
+  font-weight: 600;
+}
+
+.inactive-chip {
+  background-color: #ffebee !important;
+  color: #d93025 !important;
+  font-weight: 600;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .policy-container {
@@ -62,4 +74,34 @@
   .mat-column-coverageDescription {
     display: none;
   }
+}
+
+.table-search-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.find-label {
+  font-weight: 500;
+  color: #6b7a90;
+  margin-right: 4px;
+}
+
+.plain-search-input {
+  min-width: 200px;
+  max-width: 240px;
+  height: 28px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 2px 8px;
+  background: #fafafa;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.plain-search-input:focus {
+  border-color: #3f51b5;
 }

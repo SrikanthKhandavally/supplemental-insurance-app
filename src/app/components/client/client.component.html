@@ -1,1 +1,70 @@
-<p>client works!</p>
+<div class="client-container">
+  <div class="client-header">
+    <h2>Clients</h2>
+    <div class="client-header-actions">
+      <button mat-raised-button color="primary" (click)="openClientForm()">
+        <mat-icon>person_add</mat-icon>
+        Add Client
+      </button>
+    </div>
+  </div>
+  <mat-card>
+    <mat-card-content>
+      <div class="table-search-row">
+        <span class="find-label">Find:</span>
+        <input class="plain-search-input" (keyup)="applyFilter($event)" placeholder="Search by name, email, city..." />
+      </div>
+      <table mat-table [dataSource]="clients" class="client-table">
+        <!-- Client ID -->
+        <ng-container matColumnDef="client_id">
+          <th mat-header-cell *matHeaderCellDef>Client ID</th>
+          <td mat-cell *matCellDef="let client">{{client.client_id}}</td>
+        </ng-container>
+        <!-- Name -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let client">{{client.first_name}} {{client.last_name}}</td>
+        </ng-container>
+        <!-- Email -->
+        <ng-container matColumnDef="email_address">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let client">{{client.email_address}}</td>
+        </ng-container>
+        <!-- Phone -->
+        <ng-container matColumnDef="contact_phone">
+          <th mat-header-cell *matHeaderCellDef>Phone</th>
+          <td mat-cell *matCellDef="let client">{{client.contact_phone}}</td>
+        </ng-container>
+        <!-- City -->
+        <ng-container matColumnDef="city">
+          <th mat-header-cell *matHeaderCellDef>City</th>
+          <td mat-cell *matCellDef="let client">{{client.city}}</td>
+        </ng-container>
+        <!-- Status -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let client">
+            <mat-chip [color]="client.status === 'ACTIVE' ? 'primary' : 'warn'" [ngClass]="{'active-chip': client.status === 'ACTIVE', 'inactive-chip': client.status !== 'ACTIVE'}">
+              {{client.status}}
+            </mat-chip>
+          </td>
+        </ng-container>
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let client">
+            <button mat-icon-button color="primary" (click)="openClientForm(client)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="accent" (click)="viewClientDetails(client)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of clients"></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

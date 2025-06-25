@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { PolicyService, Policy } from '../../services/policy.service';
 import { PolicyFormDialogComponent } from './policy-form-dialog/policy-form-dialog.component';
+import { PolicyDetailsDialogComponent } from './policy-details-dialog.component';
 
 @Component({
   selector: 'app-policy',
@@ -50,7 +51,8 @@ export class PolicyComponent implements OnInit {
 
   openPolicyForm(policy?: Policy): void {
     const dialogRef = this.dialog.open(PolicyFormDialogComponent, {
-      width: '900px',
+      panelClass: 'policy-form-dialog-panel',
+      width: undefined,
       data: { policy }
     });
 
@@ -58,7 +60,7 @@ export class PolicyComponent implements OnInit {
       if (result) {
         if (policy) {
           // Update existing policy
-          this.policyService.updatePolicy(policy.policyId, result).subscribe(updatedPolicy => {
+          this.policyService.updatePolicy({ policyId: policy.policyId, ...result }).subscribe(updatedPolicy => {
             if (updatedPolicy) {
               const index = this.policies.data.findIndex(p => p.policyId === policy.policyId);
               if (index !== -1) {
@@ -98,8 +100,10 @@ export class PolicyComponent implements OnInit {
   }
 
   viewPolicyDetails(policy: Policy): void {
-    // TODO: Implement view details
-    console.log('Viewing policy details', policy);
+    this.dialog.open(PolicyDetailsDialogComponent, {
+      data: { policy },
+      panelClass: 'policy-details-dialog-panel'
+    });
   }
 
   togglePolicyStatus(policy: Policy): void {

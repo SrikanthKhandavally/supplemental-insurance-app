@@ -1,1 +1,54 @@
-<p>enrollment works!</p>
+<div class="enrollment-bg">
+  <mat-card class="enrollment-card">
+    <div class="enrollment-header">
+      <mat-icon class="enrollment-icon" color="primary">how_to_reg</mat-icon>
+      <div>
+        <h2>Enroll a Client</h2>
+        <p class="enrollment-subtitle">Link a client to a supplemental insurance policy.</p>
+      </div>
+    </div>
+    <form class="enrollment-form" (ngSubmit)="activateEnrollment()">
+      <mat-form-field appearance="outline" class="enrollment-field">
+        <mat-label>Client</mat-label>
+        <mat-icon matPrefix>person</mat-icon>
+        <mat-select [(value)]="selectedClientId" required>
+          <mat-option *ngFor="let client of clients" [value]="client.client_id">
+            {{ client.first_name }} {{ client.last_name }} ({{ client.client_id }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="enrollment-field">
+        <mat-label>Policy</mat-label>
+        <mat-icon matPrefix>policy</mat-icon>
+        <mat-select [(value)]="selectedPolicyId" required>
+          <mat-option *ngFor="let policy of policies" [value]="policy.policyId">
+            {{ policy.policyType }} ({{ policy.policyId }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="enrollment-field">
+        <mat-label>Payment Frequency</mat-label>
+        <mat-icon matPrefix>payment</mat-icon>
+        <mat-select [(value)]="selectedPaymentFrequency" required>
+          <mat-option *ngFor="let freq of paymentFrequencies" [value]="freq.value">
+            {{ freq.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        [disabled]="!selectedClientId || !selectedPolicyId || !selectedPaymentFrequency || isEnrolling" 
+        class="enroll-btn"
+      >
+        <mat-icon *ngIf="!isEnrolling">check_circle</mat-icon>
+        <mat-spinner *ngIf="isEnrolling" diameter="20"></mat-spinner>
+        {{ isEnrolling ? 'Enrolling...' : 'Activate' }}
+      </button>
+    </form>
+  </mat-card>
+</div>

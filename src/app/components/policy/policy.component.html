@@ -9,6 +9,10 @@
 
   <mat-card>
     <mat-card-content>
+      <div class="table-search-row">
+        <span class="find-label">Find:</span>
+        <input class="plain-search-input" (keyup)="applyFilter($event)" placeholder="Search by type, id, status..." />
+      </div>
       <table mat-table [dataSource]="policies" class="policy-table">
         <!-- Policy ID Column -->
         <ng-container matColumnDef="policyId">
@@ -51,7 +55,7 @@
           <th mat-header-cell *matHeaderCellDef>Status</th>
           <td mat-cell *matCellDef="let policy">
             <mat-chip-listbox>
-              <mat-chip [color]="policy.policyStatus === 'Active' ? 'primary' : 'warn'" selected>
+              <mat-chip [color]="policy.policyStatus === 'Active' ? 'primary' : 'warn'" [ngClass]="{'active-chip': policy.policyStatus === 'Active', 'inactive-chip': policy.policyStatus !== 'Active'}" selected>
                 {{policy.policyStatus}}
               </mat-chip>
             </mat-chip-listbox>
