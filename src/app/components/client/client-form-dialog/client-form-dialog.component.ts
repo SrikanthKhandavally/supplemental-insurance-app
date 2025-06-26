@@ -51,7 +51,11 @@ export class ClientFormDialogComponent implements OnInit {
     if (this.clientForm.valid) {
       const now = new Date().toISOString();
       let payload = { ...this.clientForm.value };
-
+      // Format date_of_birth as 'YYYY-MM-DD'
+      if (payload.date_of_birth) {
+        const dob = new Date(payload.date_of_birth);
+        payload.date_of_birth = dob.toISOString().slice(0, 10);
+      }
       if (this.isEditMode) {
         // Editing: send client_id, blank created_date, updated now
         payload.created_date = '';
@@ -62,7 +66,6 @@ export class ClientFormDialogComponent implements OnInit {
         payload.created_date = now;
         payload.last_updated_date = now;
       }
-
       this.dialogRef.close(payload);
     }
   }

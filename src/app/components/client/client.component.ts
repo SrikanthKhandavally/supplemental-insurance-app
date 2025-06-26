@@ -54,20 +54,12 @@ export class ClientComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (client) {
-          this.clientService.updateClient(result).subscribe(updatedClient => {
-            if (updatedClient) {
-              const index = this.clients.data.findIndex(c => c.client_id === updatedClient.client_id);
-              if (index !== -1) {
-                const updatedData = [...this.clients.data];
-                updatedData[index] = updatedClient;
-                this.clients.data = updatedData;
-              }
-            }
+          this.clientService.updateClient(result).subscribe(() => {
+            this.loadClients();
           });
         } else {
-          this.clientService.addClient(result).subscribe(newClient => {
-            const updatedData = [...this.clients.data, newClient];
-            this.clients.data = updatedData;
+          this.clientService.addClient(result).subscribe(() => {
+            this.loadClients();
           });
         }
       }

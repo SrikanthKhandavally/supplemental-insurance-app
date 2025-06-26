@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
+import { ModeService } from './mode.service';
 
 export interface Client {
   client_id: string;
@@ -25,9 +26,10 @@ export interface Client {
 
 @Injectable({ providedIn: 'root' })
 export class ClientService {
-  private apiUrl = 'http://127.0.0.1:5000/client/add';
-  private apiGetUrl = 'http://127.0.0.1:5000/client/all';
-  // Dummy data for now
+  private legacyBaseUrl = 'http://127.0.0.1:5000';
+  private aiBaseUrl = 'http://127.0.0.1:5001';
+  private mode: string = 'legacy';
+
   private mockClients: any[] = [
     {
       client_id: 'CLI-20250618-0063',
@@ -51,11 +53,19 @@ export class ClientService {
     // ...more clients
   ];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private modeService: ModeService) {
+    this.modeService.mode$.subscribe(mode => {
+      this.mode = mode;
+    });
+  }
 
-  // Simulate API GET
+  private getRoutePrefix(): string {
+    return this.mode === 'ai' ? '/ai' : '';
+  }
+
   getClients(): Observable<Client[]> {
-    return this.http.get<any[]>(this.apiGetUrl).pipe(
+    const url = this.getRoutePrefix() + '/client/all';
+    return this.http.get<any[]>(url).pipe(
       map(apiClients => apiClients.map(apiClient => ({
         client_id: apiClient.CLIENTID,
         first_name: apiClient.FIRSTNAME,
@@ -81,41 +91,29 @@ export class ClientService {
     );
   }
 
-  // Actual getClients() API call
-  /* getClients(): Observable<Client[]> {
-    return this.http.get<any[]>('YOUR_API_ENDPOINT').pipe(
-      map(apiClients => apiClients.map(apiClient => ({
-        clientId: apiClient.CLIENTID,
-        firstName: apiClient.FIRSTNAME,
-        lastName: apiClient.LASTNAME,
-        gender: apiClient.GENDER,
-        dateOfBirth: apiClient.DATEOFBIRTH,
-        address: apiClient.ADDRESS,
-        city: apiClient.CITY,
-        state: apiClient.STATE,
-        postalCode: apiClient.POSTALCODE,
-        country: apiClient.COUNTRY,
-        contactPhone: apiClient.CONTACTPHONE,
-        emailAddress: apiClient.EMAILADDRESS,
-        clientStatus: apiClient.CLIENTSTATUS,
-        createdDate: apiClient.CREATEDDATE,
-        lastUpdatedDate: apiClient.LASTUPDATEDDATE,
-        maritalStatus: apiClient.MARITALSTATUS,
-        occupation: apiClient.OCCUPATION,
-      })))
-    );
-  }*/
-  
   getClientById(client_id: string): Observable<Client | undefined> {
     return of(this.mockClients.find(c => c.client_id === client_id));
   }
 
-  // Simulate API POST for Add Client (using provided payload structure)
   addClient(payload: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, payload);
+    const formattedPayload = {
+      ...payload,
+      date_of_birth: payload.date_of_birth ? new Date(payload.date_of_birth).toISOString().slice(0, 10) : undefined,
+    };
+    delete formattedPayload.created_date;
+    delete formattedPayload.last_updated_date;
+    const url = this.getRoutePrefix() + '/client/add';
+    return this.http.post<any>(url, formattedPayload);
   }
 
   updateClient(payload: any): Observable<any> {
-    return this.http.put<any>(this.apiUrl, payload);
+    const formattedPayload = {
+      ...payload,
+      date_of_birth: payload.date_of_birth ? new Date(payload.date_of_birth).toISOString().slice(0, 10) : undefined,
+    };
+    delete formattedPayload.created_date;
+    delete formattedPayload.last_updated_date;
+    const url = this.getRoutePrefix() + '/client/update';
+    return this.http.post<any>(url, formattedPayload);
   }
 }

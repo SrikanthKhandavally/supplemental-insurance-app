@@ -6,6 +6,13 @@
     <span class="toolbar-title">Supplemental Insurance Portal</span>
   </div>
   <div class="toolbar-right">
+    <mat-form-field class="mode-dropdown">
+      <mat-label>Mode</mat-label>
+      <mat-select [(value)]="selectedMode" (selectionChange)="onModeChange($event.value)">
+        <mat-option value="legacy">Legacy</mat-option>
+        <mat-option value="ai">AI</mat-option>
+      </mat-select>
+    </mat-form-field>
     <button mat-icon-button>
       <mat-icon>notifications</mat-icon>
     </button>

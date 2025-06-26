@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { ModeService } from './mode.service';
 
 export interface Policy {
   policyId: number;
@@ -19,7 +20,9 @@ export interface Policy {
   providedIn: 'root'
 })
 export class PolicyService {
-  private apiUrl = 'http://127.0.0.1:5000/policy/add';
+  private legacyBaseUrl = 'http://127.0.0.1:5000';
+  private aiBaseUrl = 'http://127.0.0.1:5001';
+  private mode: string = 'legacy';
 
   // Mock data for development
   private mockPolicies: Policy[] = [
@@ -69,10 +72,19 @@ export class PolicyService {
     }
   ];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private modeService: ModeService) {
+    this.modeService.mode$.subscribe(mode => {
+      this.mode = mode;
+    });
+  }
+
+  private getRoutePrefix(): string {
+    return this.mode === 'ai' ? '/ai' : '';
+  }
 
   getPolicies(): Observable<Policy[]> {
-    return this.http.get<any[]>(this.apiUrl + '/all').pipe(
+    const url = this.getRoutePrefix() + '/policy/all';
+    return this.http.get<any[]>(url).pipe(
       map(apiPolicies => apiPolicies.map(api => ({
         policyId: api.POLICYID,
         policyType: api.POLICYTYPENAME,
@@ -101,15 +113,13 @@ export class PolicyService {
    * - On API failure, falls back to mock data.
    */
   createPolicy(policy: Omit<Policy, 'policyId' | 'createdAt' | 'updatedAt'>): Observable<any> {
-    const now = new Date();
-    const payload = {
-      ...policy,
-      createdAt: now,
-      updatedAt: now
-    };
-    return this.http.post<any>(this.apiUrl + '/add', payload).pipe(
+    const payload = { ...policy };
+    if ('createdAt' in payload) delete (payload as any).createdAt;
+    if ('updatedAt' in payload) delete (payload as any).updatedAt;
+    const url = this.getRoutePrefix() + '/policy/add/add';
+    return this.http.post<any>(url, payload).pipe(
       catchError(() => {
-        // Fallback to mock
+        const now = new Date();
         const newId = Math.max(...this.mockPolicies.map(p => p.policyId), 0) + 1;
         const newPolicy: Policy = {
           ...policy,
@@ -129,17 +139,14 @@ export class PolicyService {
    * - On API failure, falls back to mock data.
    */
   updatePolicy(policy: Partial<Policy> & { policyId: number }): Observable<any> {
-    const now = new Date();
     const { policyId, ...rest } = policy;
-    const payload = {
-      ...rest,
-      policyId,
-      updatedAt: now
-      // Do not send createdAt
-    };
-    return this.http.put<any>(this.apiUrl + '/add', payload).pipe(
+    const payload = { ...rest, policyId };
+    if ('createdAt' in payload) delete (payload as any).createdAt;
+    if ('updatedAt' in payload) delete (payload as any).updatedAt;
+    const url = this.getRoutePrefix() + '/policy/update';
+    return this.http.put<any>(url, payload).pipe(
       catchError(() => {
-        // Fallback to mock
+        const now = new Date();
         const index = this.mockPolicies.findIndex(p => p.policyId === policyId);
         if (index !== -1) {
           this.mockPolicies[index] = {

@@ -59,36 +59,12 @@ export class PolicyComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (policy) {
-          // Update existing policy
-          this.policyService.updatePolicy({ policyId: policy.policyId, ...result }).subscribe(updatedPolicy => {
-            if (updatedPolicy) {
-              const index = this.policies.data.findIndex(p => p.policyId === policy.policyId);
-              if (index !== -1) {
-                const updatedData = [...this.policies.data];
-                updatedData[index] = updatedPolicy;
-                this.policies.data = updatedData;
-              }
-            }
+          this.policyService.updatePolicy({ policyId: policy.policyId, ...result }).subscribe(() => {
+            this.loadPolicies();
           });
         } else {
-          // Create new policy via API, then add to table and mockPolicies
-          this.policyService.createPolicy(result).subscribe(apiResponse => {
-            // Map API response to Policy object
-            const data = apiResponse.data ? apiResponse.data : apiResponse; // fallback if API returns just the object
-            const newPolicy = {
-              policyId: data.id,
-              policyType: data.policyType,
-              coverageDescription: data.coverageDescription,
-              coverageAmount: data.coverageAmount,
-              premiumAmount: data.premiumAmount,
-              paymentFrequency: data.paymentFrequency,
-              policyStatus: data.policyStatus,
-              createdAt: new Date(), // or use backend value if available
-              updatedAt: new Date()  // or use backend value if available
-            };
-            const updatedData = [...this.policies.data, newPolicy];
-            this.policies.data = updatedData;
-            this.policyService.addToMockPolicies(newPolicy);
+          this.policyService.createPolicy(result).subscribe(() => {
+            this.loadPolicies();
           });
         }
       }

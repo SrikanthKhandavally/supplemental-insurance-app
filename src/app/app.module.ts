@@ -15,6 +15,7 @@ import { EnrollmentComponent } from './components/enrollment/enrollment.componen
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MaterialModule } from './material/material.module';
 import { PolicyDetailsDialogComponent } from './components/policy/policy-details-dialog.component';
+import { ModeService } from './services/mode.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { PolicyDetailsDialogComponent } from './components/policy/policy-details
     HttpClientModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [ModeService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
